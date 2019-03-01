@@ -1,27 +1,36 @@
-# KnoraApiJsLibTest
+# Purpose of this project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
+This Angular application is supposed to test development builds of the `@knora/api` NPM package. 
+Thus, it does not directly install the package through NPM.
+Instead, it links a local version using the NPM package `yalc`.
 
-## Development server
+# Setup application
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Install yalc
 
-## Code scaffolding
+Install the NPM package `yalc` by running `npm i yalc -g`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Setup development of Knora API package
 
-## Build
+Check out https://github.com/dhlab-basel/knora-api-js-lib to the folder of your choice on your computer.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Then, open the root directory of the library in the terminal and run
 
-## Running unit tests
+```
+npm install && npm yalc-dist
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This command will first install other NPM packages (dependencies), make a local build of the package and then publish the package to the local `yalc` store.
 
-## Running end-to-end tests
+## Setup development of this test application
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Open the root directory of this application the terminal and run:
 
-## Further help
+```
+yalc add @knora/api
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Run application
+
+Now you may proceed using the Angular CLI. To see the result in the browser, run `ng serve` in the terminal.
