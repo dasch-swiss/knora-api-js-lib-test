@@ -8,7 +8,7 @@ Instead, it links a local version using the NPM package `yalc`.
 
 ## Install yalc
 
-Install the NPM package `yalc` by running `npm i yalc -g`.
+Install the NPM package `yalc` by running `npm install yalc -g`.
 
 ## Setup development of Knora API package
 
