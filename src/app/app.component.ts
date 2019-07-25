@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KnoraApiConfig, KnoraApiConnection } from "@knora/api";
+import {ApiResponseData, KnoraApiConfig, KnoraApiConnection, LoginResponse} from '@knora/api';
 
 @Component({
     selector: 'app-root',
@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
     login() {
 
         this.knoraApiConnection.v2.auth.login("root", "test").subscribe(
-            (token: string) => {
-                console.log(token);
+            (loginResponse: ApiResponseData<LoginResponse>) => {
+                console.log(loginResponse);
             },
             error => console.error(error)
         );
@@ -38,12 +38,20 @@ export class AppComponent implements OnInit {
 
     }
 
-    test() {
+    getUsers() {
 
-        this.knoraApiConnection.admin.users.getAll().subscribe(
+        this.knoraApiConnection.admin.users.getUsers().subscribe(
             a => console.log(a),
             b => console.error(b)
         );
+
+    }
+
+    getOntology(ontologyIri: string) {
+
+      this.knoraApiConnection.v2.onto.getOntology(ontologyIri).subscribe((onto) => {
+        console.log(onto);
+      });
 
     }
 
