@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiResponseData, KnoraApiConfig, KnoraApiConnection, LoginResponse, OntologyCache, UserCache} from '@knora/api';
+import {
+  ApiResponseData,
+  KnoraApiConfig,
+  KnoraApiConnection,
+  ListNodeCache,
+  LoginResponse,
+  OntologyCache,
+  UserCache
+} from '@knora/api';
 import {UsersResponse} from '@knora/api/src/models/admin/users-response';
+
 
 @Component({
   selector: 'app-root',
@@ -13,13 +22,15 @@ export class AppComponent implements OnInit {
 
   userCache: UserCache;
   ontologyCache: OntologyCache;
+  listNodeCache: ListNodeCache;
 
   ngOnInit() {
-    const config = new KnoraApiConfig('http', '0.0.0.0', 3333);
+    const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
     this.knoraApiConnection = new KnoraApiConnection(config);
-    console.log(this.knoraApiConnection);
+    // console.log(this.knoraApiConnection);
     this.userCache = new UserCache(this.knoraApiConnection);
     this.ontologyCache = new OntologyCache(this.knoraApiConnection, config);
+    this.listNodeCache = new ListNodeCache(this.knoraApiConnection);
   }
 
   login() {
@@ -71,12 +82,100 @@ export class AppComponent implements OnInit {
 
   getResource(iri: string) {
 
-    this.knoraApiConnection.v2.res.getResource(iri, this.ontologyCache).subscribe(
+    this.knoraApiConnection.v2.res.getResource(iri, this.ontologyCache, this.listNodeCache).subscribe(
       (resClass) => {
         console.log(resClass);
       }
     );
 
   }
+
+  getListNode(listNodeIri: string) {
+
+    this.listNodeCache.getNode(listNodeIri).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+  fulltextSearch(searchTerm: string) {
+
+    this.knoraApiConnection.v2.search.doFulltextSearch(searchTerm, this.ontologyCache, this.listNodeCache, 0).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+  fulltextSearchCountQuery(searchTerm: string) {
+
+    this.knoraApiConnection.v2.search.doFulltextSearchCountQuery(searchTerm, 0).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+  labelSearch(searchTerm: string) {
+
+    this.knoraApiConnection.v2.search.doSearchByLabel(searchTerm, this.ontologyCache, this.listNodeCache, 0).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+  extendedSearch() {
+
+    const gravsearchQuery = `
+                PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>
+                CONSTRUCT {
+
+                    ?mainRes knora-api:isMainResource true .
+
+                } WHERE {
+
+                    ?mainRes a knora-api:Resource .
+
+                    ?mainRes a <http://0.0.0.0:3333/ontology/0001/anything/v2#Thing> .
+                }
+
+                OFFSET 0
+            `;
+
+    this.knoraApiConnection.v2.search.doExtendedSearch(gravsearchQuery, this.ontologyCache, this.listNodeCache).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+  extendedSearchCountQuery() {
+
+    const gravsearchQuery = `
+                PREFIX knora-api: <http://api.knora.org/ontology/knora-api/v2#>
+                CONSTRUCT {
+
+                    ?mainRes knora-api:isMainResource true .
+
+                } WHERE {
+
+                    ?mainRes a knora-api:Resource .
+
+                    ?mainRes a <http://0.0.0.0:3333/ontology/0001/anything/v2#Thing> .
+                }
+
+                OFFSET 0
+            `;
+
+    this.knoraApiConnection.v2.search.doExtendedSearchCountQuery(gravsearchQuery).subscribe(
+      res => {
+        console.log(res);
+      }
+    );
+  }
+
+
 
 }
