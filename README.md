@@ -17,7 +17,7 @@ Check out https://github.com/dhlab-basel/knora-api-js-lib to the folder of your 
 Then, open the root directory of the library in the terminal and run
 
 ```
-npm install && npm yalc-dist
+npm install && npm run yalc-publish
 ```
 
 This command will first install other NPM packages (dependencies), make a local build of the package and then publish the package to the local `yalc` store.
