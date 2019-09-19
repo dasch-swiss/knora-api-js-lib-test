@@ -18,10 +18,9 @@ addons:
   chrome: stable
 
 install:
-  - yarn global add tsc
   - yarn global add @angular/cli
   - yarn global add yalc
-  - cd ~ && git clone https://github.com/dhlab-basel/knora-api-js-lib && cd knora-api-js-lib && yarn yalc-publish
+  - cd ~ && git clone https://github.com/dhlab-basel/knora-api-js-lib && cd knora-api-js-lib && yarn install && yarn yalc-publish
   - cd $TRAVIS_BUILD_DIR
 
 script:
