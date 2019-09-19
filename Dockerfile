@@ -22,7 +22,6 @@ WORKDIR $NODE_ROOT
 COPY . .
 
 # Install all the packages
-RUN npm install -g @angular/cli
 RUN yarn install
 
 ## Build the angular app in production mode and store the artifacts in dist folder
