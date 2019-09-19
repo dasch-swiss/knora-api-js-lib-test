@@ -1,5 +1,31 @@
+dist: xenial
+sudo: required
+
+services:
+  - docker
+
 language: node_js
+
 node_js:
-  - "stable"
+  - "11"
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+addons:
+  chrome: stable
+
+install:
+  - yarn global add @angular/cli
+  - yarn global add yalc
+  - cd ~ && git clone https://github.com/dhlab-basel/knora-api-js-lib && cd knora-api-js-lib && yarn yalc-publish
+  - cd $TRAVIS_BUILD_DIR
+
 script:
-  - npm run build
+  - yalc remove --all && yalc add @knora/api
+  - yarn install
+  - yarn build
+  - docker build .
+
