@@ -9,6 +9,7 @@ import {
   UserCache
 } from '@knora/api';
 import {UsersResponse} from '@knora/api/src/models/admin/users-response';
+import {ReadResource} from '@knora/api/src/models/v2/resources/read-resource';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class AppComponent implements OnInit {
   userCache: UserCache;
   ontologyCache: OntologyCache;
   listNodeCache: ListNodeCache;
+
+  resource: ReadResource;
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -83,8 +86,13 @@ export class AppComponent implements OnInit {
   getResource(iri: string) {
 
     this.knoraApiConnection.v2.res.getResource(iri, this.ontologyCache, this.listNodeCache).subscribe(
-      (resClass) => {
-        console.log(resClass);
+      (res: ReadResource) => {
+        console.log(res);
+        this.resource = res;
+
+      },
+      (error) => {
+
       }
     );
 

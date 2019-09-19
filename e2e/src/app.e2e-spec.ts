@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import {browser, by, element, logging} from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -11,6 +11,20 @@ describe('workspace-project App', () => {
   it('should display welcome message', () => {
     page.navigateTo();
     expect(page.getTitleText()).toEqual('Welcome to knora-api-js-lib-test!');
+  });
+
+  it('request a resource',   () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#resource button');
+
+    button.click();
+
+    const label = page.getEle('div section#resource span.label');
+
+    expect(label.getText()).toEqual('testding');
+
   });
 
   afterEach(async () => {

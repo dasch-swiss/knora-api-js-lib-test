@@ -26,9 +26,10 @@
       <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0801/beol/v2#manuscript')">Get beol manuscript Def</button> <br /><br />
     </section>
 
-    <section>
+    <section id="resource">
       <h3>Resource</h3>
       <button (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
+      <span class="label">{{resource?.label}}</span>
     </section>
 
     <section>
