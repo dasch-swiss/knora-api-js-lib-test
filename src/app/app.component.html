@@ -29,10 +29,10 @@
     <section id="resource">
       <h3>Resource</h3>
       <button (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
-      <span class="label">{{resource?.label}}</span> <br/>
-      <span class="uriValue">{{uriVal?.uri}}</span> <br/>
-      <span class="numOfUriValues">{{numOfUriVals}}</span> <br/>
-      <span class="numOfNonExistingValues">{{numOfNonExistingVals}}</span>
+      <div>The resource's label: <span class="label">{{resource?.label}}</span> </div> <br/>
+      <div>URI value: <span class="uriValue">{{uriVal?.uri}}</span> </div> <br/>
+      <div>Number of URI vals: <span class="numOfUriValues">{{numOfUriVals}}</span> </div> <br/>
+      <div>Number of values of a non existing property: <span class="numOfNonExistingValues">{{numOfNonExistingVals}}</span> </div>
     </section>
 
     <section>

@@ -25,6 +25,18 @@ describe('workspace-project App', () => {
 
     expect(label.getText()).toEqual('testding');
 
+    const uriValue = page.getEle('div section#resource span.uriValue');
+
+    expect(uriValue.getText()).toEqual('http://www.google.ch');
+
+    const numOfUriValues = page.getEle('div section#resource span.numOfUriValues');
+
+    expect(numOfUriValues.getText()).toEqual('1');
+
+    const numOfNonExistingValues = page.getEle('div section#resource span.numOfNonExistingValues');
+
+    expect(numOfNonExistingValues.getText()).toEqual('0');
+
   });
 
   afterEach(async () => {
