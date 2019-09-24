@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ApiResponseData,
+  ApiResponseData, Constants, CountQueryResponse,
   KnoraApiConfig,
   KnoraApiConnection,
   ListNodeCache,
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
   fulltextSearchCountQuery(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doFulltextSearchCountQuery(searchTerm, 0).subscribe(
-      res => {
+      (res: CountQueryResponse) => {
         console.log(res);
       }
     );
