@@ -37,6 +37,10 @@ describe('workspace-project App', () => {
 
     expect(numOfNonExistingValues.getText()).toEqual('0');
 
+    const uriPropValtype = page.getEle('div section#resource span.uriPropType');
+
+    expect(uriPropValtype.getText()).toEqual('http://api.knora.org/ontology/knora-api/v2#UriValue');
+
   });
 
   afterEach(async () => {

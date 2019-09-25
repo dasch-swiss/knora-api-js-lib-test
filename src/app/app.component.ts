@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   uriVal: ReadUriValue;
   numOfUriVals: number;
   numOfNonExistingVals: number;
+  uriPropType: string;
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -95,6 +96,8 @@ export class AppComponent implements OnInit {
 
         this.numOfUriVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri");
         this.numOfNonExistingVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing");
+        this.uriPropType = res.getValueType("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri") as string;
+
       },
       (error) => {
 
