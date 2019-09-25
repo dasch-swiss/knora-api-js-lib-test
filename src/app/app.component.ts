@@ -1,15 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ApiResponseData,
+  ApiResponseData, Constants, CountQueryResponse,
   KnoraApiConfig,
   KnoraApiConnection,
   ListNodeCache,
   LoginResponse,
-  OntologyCache,
-  UserCache
+  OntologyCache, ReadResource, ReadUriValue,
+  UserCache, UsersResponse
 } from '@knora/api';
-import {UsersResponse} from '@knora/api/src/models/admin/users-response';
-import {ReadResource} from '@knora/api/src/models/v2/resources/read-resource';
 
 
 @Component({
@@ -26,6 +24,10 @@ export class AppComponent implements OnInit {
   listNodeCache: ListNodeCache;
 
   resource: ReadResource;
+  uriVal: ReadUriValue;
+  numOfUriVals: number;
+  numOfNonExistingVals: number;
+  uriPropType: string;
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -90,6 +92,12 @@ export class AppComponent implements OnInit {
         console.log(res);
         this.resource = res;
 
+        this.uriVal = res.getValuesAs("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri", ReadUriValue)[0];
+
+        this.numOfUriVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri");
+        this.numOfNonExistingVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing");
+        this.uriPropType = res.getValueType("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri") as string;
+
       },
       (error) => {
 
@@ -119,7 +127,7 @@ export class AppComponent implements OnInit {
   fulltextSearchCountQuery(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doFulltextSearchCountQuery(searchTerm, 0).subscribe(
-      res => {
+      (res: CountQueryResponse) => {
         console.log(res);
       }
     );

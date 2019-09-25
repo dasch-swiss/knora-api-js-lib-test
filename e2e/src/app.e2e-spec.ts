@@ -25,6 +25,22 @@ describe('workspace-project App', () => {
 
     expect(label.getText()).toEqual('testding');
 
+    const uriValue = page.getEle('div section#resource span.uriValue');
+
+    expect(uriValue.getText()).toEqual('http://www.google.ch');
+
+    const numOfUriValues = page.getEle('div section#resource span.numOfUriValues');
+
+    expect(numOfUriValues.getText()).toEqual('1');
+
+    const numOfNonExistingValues = page.getEle('div section#resource span.numOfNonExistingValues');
+
+    expect(numOfNonExistingValues.getText()).toEqual('0');
+
+    const uriPropValtype = page.getEle('div section#resource span.uriPropType');
+
+    expect(uriPropValtype.getText()).toEqual('http://api.knora.org/ontology/knora-api/v2#UriValue');
+
   });
 
   afterEach(async () => {
