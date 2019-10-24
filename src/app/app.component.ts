@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ApiResponseData, Constants, CountQueryResponse,
+  ApiResponseData,
+  CountQueryResponse,
   KnoraApiConfig,
   KnoraApiConnection,
-  ListNodeCache,
   LoginResponse,
-  OntologyCache, ReadResource, ReadUriValue,
-  UserCache, UsersResponse
+  ReadResource,
+  ReadUriValue,
+  UserCache,
+  UsersResponse
 } from '@knora/api';
 
 
@@ -20,8 +22,6 @@ export class AppComponent implements OnInit {
   knoraApiConnection: KnoraApiConnection;
 
   userCache: UserCache;
-  ontologyCache: OntologyCache;
-  listNodeCache: ListNodeCache;
 
   resource: ReadResource;
   uriVal: ReadUriValue;
@@ -34,8 +34,6 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection = new KnoraApiConnection(config);
     // console.log(this.knoraApiConnection);
     this.userCache = new UserCache(this.knoraApiConnection);
-    this.ontologyCache = new OntologyCache(this.knoraApiConnection, config);
-    this.listNodeCache = new ListNodeCache(this.knoraApiConnection);
   }
 
   login() {
@@ -69,7 +67,7 @@ export class AppComponent implements OnInit {
 
   getOntology(iri: string) {
 
-    this.ontologyCache.getOntology(iri).subscribe(
+    this.knoraApiConnection.v2.ontologyCache.getOntology(iri).subscribe(
       onto => {
         console.log('onto ', onto);
       }
@@ -78,7 +76,7 @@ export class AppComponent implements OnInit {
 
   getResourceClass(iri: string) {
 
-    this.ontologyCache.getResourceClassDefinition(iri).subscribe(
+    this.knoraApiConnection.v2.ontologyCache.getResourceClassDefinition(iri).subscribe(
       onto => {
         console.log(onto);
       }
@@ -87,16 +85,16 @@ export class AppComponent implements OnInit {
 
   getResource(iri: string) {
 
-    this.knoraApiConnection.v2.res.getResource(iri, this.ontologyCache, this.listNodeCache).subscribe(
+    this.knoraApiConnection.v2.res.getResource(iri).subscribe(
       (res: ReadResource) => {
         console.log(res);
         this.resource = res;
 
-        this.uriVal = res.getValuesAs("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri", ReadUriValue)[0];
+        this.uriVal = res.getValuesAs('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri', ReadUriValue)[0];
 
-        this.numOfUriVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri");
-        this.numOfNonExistingVals = res.getNumberOfValues("http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing");
-        this.uriPropType = res.getValueType("http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri") as string;
+        this.numOfUriVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri');
+        this.numOfNonExistingVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing');
+        this.uriPropType = res.getValueType('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri') as string;
 
       },
       (error) => {
@@ -108,7 +106,7 @@ export class AppComponent implements OnInit {
 
   getListNode(listNodeIri: string) {
 
-    this.listNodeCache.getNode(listNodeIri).subscribe(
+    this.knoraApiConnection.v2.listNodeCache.getNode(listNodeIri).subscribe(
       res => {
         console.log(res);
       }
@@ -117,7 +115,7 @@ export class AppComponent implements OnInit {
 
   fulltextSearch(searchTerm: string) {
 
-    this.knoraApiConnection.v2.search.doFulltextSearch(searchTerm, this.ontologyCache, this.listNodeCache, 0).subscribe(
+    this.knoraApiConnection.v2.search.doFulltextSearch(searchTerm, 0).subscribe(
       res => {
         console.log(res);
       }
@@ -135,7 +133,7 @@ export class AppComponent implements OnInit {
 
   labelSearch(searchTerm: string) {
 
-    this.knoraApiConnection.v2.search.doSearchByLabel(searchTerm, this.ontologyCache, this.listNodeCache, 0).subscribe(
+    this.knoraApiConnection.v2.search.doSearchByLabel(searchTerm, 0).subscribe(
       res => {
         console.log(res);
       }
@@ -160,7 +158,7 @@ export class AppComponent implements OnInit {
                 OFFSET 0
             `;
 
-    this.knoraApiConnection.v2.search.doExtendedSearch(gravsearchQuery, this.ontologyCache, this.listNodeCache).subscribe(
+    this.knoraApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
       res => {
         console.log(res);
       }
@@ -191,7 +189,6 @@ export class AppComponent implements OnInit {
       }
     );
   }
-
 
 
 }
