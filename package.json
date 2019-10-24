@@ -7,7 +7,9 @@
     "build": "ng build --prod=true --buildOptimizer=true --progress=true",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e --prod=true"
+    "e2e": "ng e2e --prod=true",
+    "webdriver-start": "webdriver-manager start &",
+    "webdriver-update": "webdriver-manager update"
   },
   "private": true,
   "dependencies": {
