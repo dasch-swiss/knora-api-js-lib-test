@@ -42,6 +42,8 @@ install:
 script:
   - yalc remove --all && yalc add @knora/api
   - yarn install
+  - ./node_modules/protractor/bin/webdriver-manager update
+  - yarn install webdriver-manager@latest
   - yarn e2e
   - yarn build
   - docker build .
