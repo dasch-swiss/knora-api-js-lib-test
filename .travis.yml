@@ -43,7 +43,7 @@ script:
   - yalc remove --all && yalc add @knora/api
   - yarn install
   - yarn webdriver-update
-  - npm webdriver-start
+  - yarn webdriver-start
   - yarn e2e
   - yarn build
   - docker build .
