@@ -12,10 +12,14 @@ node_js:
 scala:
   -  "2.12.1"
 
+jdk:
+  - openjdk10
+
 cache:
   yarn: true
   directories:
     - node_modules
+    - "$HOME/.ivy2"
 
 addons:
   chrome: stable
