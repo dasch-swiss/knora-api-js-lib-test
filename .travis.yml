@@ -10,7 +10,7 @@ node_js:
   - "11"
 
 scala:
-  - "2.12.8"
+  -  "2.12.1"
 
 cache:
   yarn: true
