@@ -26,9 +26,6 @@ addons:
   apt:
     packages:
       - expect
-before_install:
-  # start your web application and listen on `localhost`
-  #- google-chrome-stable --single-process --disable-dev-shm-usage --headless --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 install:
   #- git clone --single-branch --depth 1 https://github.com/dasch-swiss/knora-api.git
@@ -45,8 +42,7 @@ install:
 script:
   - yalc remove --all && yalc add @knora/api
   - yarn install
-  - node node_modules\protractor\bin\webdriver-manager update
-  - node node_modules\protractor\bin\webdriver-manager start
+  - ./node_modules\protractor\bin\webdriver-manager update
   - yarn e2e
   - yarn build
   - docker build .
