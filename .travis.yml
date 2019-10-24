@@ -4,7 +4,7 @@ sudo: required
 services:
   - docker
 
-language: node_js
+language: scala
 
 node_js:
   - "11"
