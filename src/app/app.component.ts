@@ -8,7 +8,7 @@ import {
   ReadResource,
   UserCache,
   UsersResponse,
-  ReadOntology
+  ReadOntology, ListNode
 } from '@knora/api';
 
 @Component({
@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   ontologies: Map<string, ReadOntology>;
 
   resource: ReadResource;
+
+  listNode: ListNode;
 
   searchResult: ReadResource[];
   size: number;
@@ -102,8 +104,11 @@ export class AppComponent implements OnInit {
   getListNode(listNodeIri: string) {
 
     this.knoraApiConnection.v2.listNodeCache.getNode(listNodeIri).subscribe(
-      res => {
+      (res: ListNode) => {
         console.log(res);
+
+        this.listNode = res;
+
       }
     );
   }

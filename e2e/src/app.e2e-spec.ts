@@ -69,6 +69,20 @@ describe('workspace-project App', () => {
 
   });
 
+  it('request a list node', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#listnode button');
+
+    button.click();
+
+    const label = page.getEle('div section#listnode span.label');
+
+    expect(label.getText()).toEqual('Tree list node 01');
+
+  });
+
   it('perform a fulltext search', () => {
 
     page.navigateTo();
