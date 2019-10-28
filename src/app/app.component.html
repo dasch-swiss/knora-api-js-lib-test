@@ -22,7 +22,7 @@
       <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0001/anything/v2#Thing')">Get anything Thing Def</button> <br /><br />
       <div>
         Ontology Information:
-        <span class="ontology">{{ontologies?.size}}</span>
+        <div>Number of ontologies: <span class="ontology">{{ontologies?.size}}</span></div>
       </div>
     </section>
 
@@ -38,17 +38,18 @@
       <button (click)="getListNode('http://rdfh.ch/lists/0801/optics')">Get another beol list node</button> <br /><br />
     </section>
 
-    <section>
+    <section id="search">
       <h3>Search</h3>
-      <button (click)="fulltextSearch('thing')">Fulltext search for a thing</button> <br /><br />
-      <button (click)="fulltextSearchCountQuery('thing')">S. for a thing count query</button> <br /><br />
+      <button class="fulltext" (click)="fulltextSearch('thing')">Fulltext search for a thing</button> <br /><br />
+      <button class="fulltextcount" (click)="fulltextSearchCountQuery('thing')">S. for a thing count query</button> <br /><br />
 
       <button (click)="labelSearch('thing')">Label search for a thing</button> <br /><br />
 
       <button (click)="extendedSearch()">Search for things</button> <br /><br />
       <button (click)="extendedSearchCountQuery()">Search for things count</button> <br /><br />
 
-
+      <div>Search result: <span class="result">{{searchResult}}</span></div>
+      <div>Search result size: <span class="size">{{size}}</span></div>
 
     </section>
 </div>

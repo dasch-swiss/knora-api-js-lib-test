@@ -69,6 +69,34 @@ describe('workspace-project App', () => {
 
   });
 
+  it('perform a fulltext search', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#search button.fulltext');
+
+    button.click();
+
+    const size = page.getEle('div section#search span.size');
+
+    expect(size.getText()).toEqual('16');
+
+  });
+
+  it('perform a fulltext search count query', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#search button.fulltext');
+
+    button.click();
+
+    const size = page.getEle('div section#search span.size');
+
+    expect(size.getText()).toEqual('16');
+
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);

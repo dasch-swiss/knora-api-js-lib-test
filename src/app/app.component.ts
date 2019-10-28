@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
 
   resource: ReadResource;
 
+  searchResult: ReadResource[];
+  size: number;
+
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
     this.knoraApiConnection = new KnoraApiConnection(config);
@@ -108,8 +111,10 @@ export class AppComponent implements OnInit {
   fulltextSearch(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doFulltextSearch(searchTerm, 0).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -119,6 +124,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.search.doFulltextSearchCountQuery(searchTerm, 0).subscribe(
       (res: CountQueryResponse) => {
         console.log(res);
+        this.size = res.numberOfResults;
       }
     );
   }
