@@ -97,6 +97,48 @@ describe('workspace-project App', () => {
 
   });
 
+  it('perform a label search', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#search button.labelsearch');
+
+    button.click();
+
+    const size = page.getEle('div section#search span.size');
+
+    expect(size.getText()).toEqual('16');
+
+  });
+
+  it('perform an extended search', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#search button.extended');
+
+    button.click();
+
+    const size = page.getEle('div section#search span.size');
+
+    expect(size.getText()).toEqual('25');
+
+  });
+
+  it('perform an extended search count query', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#search button.extendedcount');
+
+    button.click();
+
+    const size = page.getEle('div section#search span.size');
+
+    expect(size.getText()).toEqual('43');
+
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);

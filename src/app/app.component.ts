@@ -132,8 +132,10 @@ export class AppComponent implements OnInit {
   labelSearch(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doSearchByLabel(searchTerm, 0).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -157,8 +159,10 @@ export class AppComponent implements OnInit {
             `;
 
     this.knoraApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -182,8 +186,9 @@ export class AppComponent implements OnInit {
             `;
 
     this.knoraApiConnection.v2.search.doExtendedSearchCountQuery(gravsearchQuery).subscribe(
-      res => {
+      (res: CountQueryResponse) => {
         console.log(res);
+        this.size = res.numberOfResults;
       }
     );
   }
