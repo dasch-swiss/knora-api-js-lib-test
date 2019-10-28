@@ -6,11 +6,10 @@ import {
   KnoraApiConnection,
   LoginResponse,
   ReadResource,
-  ReadUriValue,
   UserCache,
-  UsersResponse
+  UsersResponse,
+  ReadOntology
 } from '@knora/api';
-
 
 @Component({
   selector: 'app-root',
@@ -23,11 +22,9 @@ export class AppComponent implements OnInit {
 
   userCache: UserCache;
 
+  ontologies: Map<string, ReadOntology>;
+
   resource: ReadResource;
-  uriVal: ReadUriValue;
-  numOfUriVals: number;
-  numOfNonExistingVals: number;
-  uriPropType: string;
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -70,6 +67,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.ontologyCache.getOntology(iri).subscribe(
       onto => {
         console.log('onto ', onto);
+        this.ontologies = onto;
       }
     );
   }
@@ -89,12 +87,6 @@ export class AppComponent implements OnInit {
       (res: ReadResource) => {
         console.log(res);
         this.resource = res;
-
-        this.uriVal = res.getValuesAs('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri', ReadUriValue)[0];
-
-        this.numOfUriVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri');
-        this.numOfNonExistingVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing');
-        this.uriPropType = res.getValueType('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri') as string;
 
       },
       (error) => {

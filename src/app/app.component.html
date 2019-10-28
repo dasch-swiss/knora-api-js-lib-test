@@ -13,27 +13,23 @@
       <button (click)="getUsers()">All users</button> <br /><br />
     </section>
 
-    <section>
-      <h3>Ontology</h3>
-      <button (click)="getOntology('http://api.knora.org/ontology/knora-api/v2')">Get system ontology</button> <br /><br />
-      <button (click)="getOntology('http://api.knora.org/ontology/knora-admin/v2')">Get admin system ontology</button> <br /><br />
-      <button (click)="getOntology('http://api.knora.org/ontology/salsah-gui/v2')">Get Salsah-GUI ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0801/beol/v2')">Get beol ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0801/biblio/v2')">Get biblio ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0001/anything/v2')">Get anything ontology</button> <br /><br />
+    <section id="ontology">
+      <h3>Ontology Cache</h3>
+      <button class="knora-api" (click)="getOntology('http://api.knora.org/ontology/knora-api/v2')">Get system ontology</button> <br /><br />
+      <button class="anything" (click)="getOntology('http://0.0.0.0:3333/ontology/0001/anything/v2')">Get anything ontology</button> <br /><br />
+      <button class="something" (click)="getOntology('http://0.0.0.0:3333/ontology/0001/something/v2')">Get something ontology</button> <br /><br />
 
       <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0001/anything/v2#Thing')">Get anything Thing Def</button> <br /><br />
-      <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0801/beol/v2#manuscript')">Get beol manuscript Def</button> <br /><br />
+      <div>
+        Ontology Information:
+        <span class="ontology">{{ontologies?.size}}</span>
+      </div>
     </section>
 
     <section id="resource">
       <h3>Resource</h3>
       <button (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
       <div>The resource's label: <span class="label">{{resource?.label}}</span> </div> <br/>
-      <div>URI value: <span class="uriValue">{{uriVal?.uri}}</span> </div> <br/>
-      <div>Number of URI vals: <span class="numOfUriValues">{{numOfUriVals}}</span> </div> <br/>
-      <div>Number of values of a non existing property: <span class="numOfNonExistingValues">{{numOfNonExistingVals}}</span> </div>
-      <div>URi property value type <span class="uriPropType">{{uriPropType}}</span></div>
     </section>
 
     <section>
