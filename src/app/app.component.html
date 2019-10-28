@@ -2,10 +2,11 @@
 
     <h1>Welcome to knora-api-js-lib-test!</h1>
 
-    <section>
+    <section id="login">
       <h3>Login/Logout</h3>
-      <button (click)="login()">Login</button><br /><br />
-      <button (click)="logout()">Logout</button><br /><br />
+      <button class="login" (click)="login()">Login</button><br /><br />
+      <button class="logout" (click)="logout()">Logout</button><br /><br />
+      <div>Status: <span class="status">{{status}}</span></div>
     </section>
 
     <section>
@@ -13,46 +14,43 @@
       <button (click)="getUsers()">All users</button> <br /><br />
     </section>
 
-    <section>
-      <h3>Ontology</h3>
-      <button (click)="getOntology('http://api.knora.org/ontology/knora-api/v2')">Get system ontology</button> <br /><br />
-      <button (click)="getOntology('http://api.knora.org/ontology/knora-admin/v2')">Get admin system ontology</button> <br /><br />
-      <button (click)="getOntology('http://api.knora.org/ontology/salsah-gui/v2')">Get Salsah-GUI ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0801/beol/v2')">Get beol ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0801/biblio/v2')">Get biblio ontology</button> <br /><br />
-      <button (click)="getOntology('http://0.0.0.0:3333/ontology/0001/anything/v2')">Get anything ontology</button> <br /><br />
+    <section id="ontology">
+      <h3>Ontology Cache</h3>
+      <button class="knora-api" (click)="getOntology('http://api.knora.org/ontology/knora-api/v2')">Get system ontology</button> <br /><br />
+      <button class="anything" (click)="getOntology('http://0.0.0.0:3333/ontology/0001/anything/v2')">Get anything ontology</button> <br /><br />
+      <button class="something" (click)="getOntology('http://0.0.0.0:3333/ontology/0001/something/v2')">Get something ontology</button> <br /><br />
 
       <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0001/anything/v2#Thing')">Get anything Thing Def</button> <br /><br />
-      <button (click)="getResourceClass('http://0.0.0.0:3333/ontology/0801/beol/v2#manuscript')">Get beol manuscript Def</button> <br /><br />
+      <div>
+        Ontology Information:
+        <div>Number of ontologies: <span class="ontology">{{ontologies?.size}}</span></div>
+      </div>
     </section>
 
     <section id="resource">
       <h3>Resource</h3>
       <button (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
       <div>The resource's label: <span class="label">{{resource?.label}}</span> </div> <br/>
-      <div>URI value: <span class="uriValue">{{uriVal?.uri}}</span> </div> <br/>
-      <div>Number of URI vals: <span class="numOfUriValues">{{numOfUriVals}}</span> </div> <br/>
-      <div>Number of values of a non existing property: <span class="numOfNonExistingValues">{{numOfNonExistingVals}}</span> </div>
-      <div>URi property value type <span class="uriPropType">{{uriPropType}}</span></div>
     </section>
 
-    <section>
+    <section id="listnode">
       <h3>ListNode</h3>
-      <button (click)="getListNode('http://rdfh.ch/lists/0801/mathematics')">Get beol list node</button> <br /><br />
-      <button (click)="getListNode('http://rdfh.ch/lists/0801/optics')">Get another beol list node</button> <br /><br />
+      <button (click)="getListNode('http://rdfh.ch/lists/0001/treeList01')">Get anything list node</button> <br /><br />
+      <div>The list node's label: <span class="label">{{listNode?.label}}</span> </div> <br/>
     </section>
 
-    <section>
+    <section id="search">
       <h3>Search</h3>
-      <button (click)="fulltextSearch('thing')">Fulltext search for a thing</button> <br /><br />
-      <button (click)="fulltextSearchCountQuery('thing')">S. for a thing count query</button> <br /><br />
+      <button class="fulltext" (click)="fulltextSearch('thing')">Fulltext search for a thing</button> <br /><br />
+      <button class="fulltextcount" (click)="fulltextSearchCountQuery('thing')">S. for a thing count query</button> <br /><br />
 
-      <button (click)="labelSearch('thing')">Label search for a thing</button> <br /><br />
+      <button class="labelsearch" (click)="labelSearch('thing')">Label search for a thing</button> <br /><br />
 
-      <button (click)="extendedSearch()">Search for things</button> <br /><br />
-      <button (click)="extendedSearchCountQuery()">Search for things count</button> <br /><br />
+      <button class="extended" (click)="extendedSearch()">Search for things</button> <br /><br />
+      <button class="extendedcount" (click)="extendedSearchCountQuery()">Search for things count</button> <br /><br />
 
-
+      <div>Search result: <span class="result">{{searchResult}}</span></div>
+      <div>Search result size: <span class="size">{{size}}</span></div>
 
     </section>
 </div>

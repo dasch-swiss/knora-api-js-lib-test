@@ -6,11 +6,10 @@ import {
   KnoraApiConnection,
   LoginResponse,
   ReadResource,
-  ReadUriValue,
   UserCache,
-  UsersResponse
+  UsersResponse,
+  ReadOntology, ListNode
 } from '@knora/api';
-
 
 @Component({
   selector: 'app-root',
@@ -23,11 +22,16 @@ export class AppComponent implements OnInit {
 
   userCache: UserCache;
 
+  ontologies: Map<string, ReadOntology>;
+
   resource: ReadResource;
-  uriVal: ReadUriValue;
-  numOfUriVals: number;
-  numOfNonExistingVals: number;
-  uriPropType: string;
+
+  listNode: ListNode;
+
+  searchResult: ReadResource[];
+  size: number;
+
+  status: string = "";
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -41,6 +45,8 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.login('root', 'test').subscribe(
       (loginResponse: ApiResponseData<LoginResponse>) => {
         console.log(loginResponse);
+        this.status = "logged in";
+
       },
       error => console.error(error)
     );
@@ -50,8 +56,11 @@ export class AppComponent implements OnInit {
   logout() {
 
     this.knoraApiConnection.v2.auth.logout().subscribe(
-      a => console.log(a),
-      b => console.error(b)
+      logoutRes => {
+        console.log(logoutRes);
+        this.status = "logged out";
+      },
+      error => console.error(error)
     );
 
   }
@@ -70,6 +79,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.ontologyCache.getOntology(iri).subscribe(
       onto => {
         console.log('onto ', onto);
+        this.ontologies = onto;
       }
     );
   }
@@ -90,12 +100,6 @@ export class AppComponent implements OnInit {
         console.log(res);
         this.resource = res;
 
-        this.uriVal = res.getValuesAs('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri', ReadUriValue)[0];
-
-        this.numOfUriVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri');
-        this.numOfNonExistingVals = res.getNumberOfValues('http://0.0.0.0:3333/ontology/0001/anything/v2#hasNothing');
-        this.uriPropType = res.getValueType('http://0.0.0.0:3333/ontology/0001/anything/v2#hasUri') as string;
-
       },
       (error) => {
 
@@ -107,8 +111,11 @@ export class AppComponent implements OnInit {
   getListNode(listNodeIri: string) {
 
     this.knoraApiConnection.v2.listNodeCache.getNode(listNodeIri).subscribe(
-      res => {
+      (res: ListNode) => {
         console.log(res);
+
+        this.listNode = res;
+
       }
     );
   }
@@ -116,8 +123,10 @@ export class AppComponent implements OnInit {
   fulltextSearch(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doFulltextSearch(searchTerm, 0).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -127,6 +136,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.search.doFulltextSearchCountQuery(searchTerm, 0).subscribe(
       (res: CountQueryResponse) => {
         console.log(res);
+        this.size = res.numberOfResults;
       }
     );
   }
@@ -134,8 +144,10 @@ export class AppComponent implements OnInit {
   labelSearch(searchTerm: string) {
 
     this.knoraApiConnection.v2.search.doSearchByLabel(searchTerm, 0).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -159,8 +171,10 @@ export class AppComponent implements OnInit {
             `;
 
     this.knoraApiConnection.v2.search.doExtendedSearch(gravsearchQuery).subscribe(
-      res => {
+      (res: ReadResource[]) => {
         console.log(res);
+        this.searchResult = res;
+        this.size = res.length;
       }
     );
   }
@@ -184,8 +198,9 @@ export class AppComponent implements OnInit {
             `;
 
     this.knoraApiConnection.v2.search.doExtendedSearchCountQuery(gravsearchQuery).subscribe(
-      res => {
+      (res: CountQueryResponse) => {
         console.log(res);
+        this.size = res.numberOfResults;
       }
     );
   }
