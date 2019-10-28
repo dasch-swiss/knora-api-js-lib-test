@@ -31,6 +31,8 @@ export class AppComponent implements OnInit {
   searchResult: ReadResource[];
   size: number;
 
+  status: string = "";
+
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
     this.knoraApiConnection = new KnoraApiConnection(config);
@@ -43,6 +45,8 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.login('root', 'test').subscribe(
       (loginResponse: ApiResponseData<LoginResponse>) => {
         console.log(loginResponse);
+        this.status = "logged in";
+
       },
       error => console.error(error)
     );
@@ -52,8 +56,11 @@ export class AppComponent implements OnInit {
   logout() {
 
     this.knoraApiConnection.v2.auth.logout().subscribe(
-      a => console.log(a),
-      b => console.error(b)
+      logoutRes => {
+        console.log(logoutRes);
+        this.status = "logged out";
+      },
+      error => console.error(error)
     );
 
   }

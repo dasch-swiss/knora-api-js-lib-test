@@ -13,6 +13,34 @@ describe('workspace-project App', () => {
     expect(page.getTitleText()).toEqual('Welcome to knora-api-js-lib-test!');
   });
 
+  it('should log in', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#login button.login');
+
+    button.click();
+
+    const status = page.getEle('div section#login span.status');
+
+    expect(status.getText()).toEqual('logged in');
+
+  });
+
+  it('should log out', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#login button.logout');
+
+    button.click();
+
+    const status = page.getEle('div section#login span.status');
+
+    expect(status.getText()).toEqual('logged out');
+
+  });
+
   it('request the knora-api system ontology', () => {
 
     page.navigateTo();

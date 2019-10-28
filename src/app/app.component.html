@@ -2,10 +2,11 @@
 
     <h1>Welcome to knora-api-js-lib-test!</h1>
 
-    <section>
+    <section id="login">
       <h3>Login/Logout</h3>
-      <button (click)="login()">Login</button><br /><br />
-      <button (click)="logout()">Logout</button><br /><br />
+      <button class="login" (click)="login()">Login</button><br /><br />
+      <button class="logout" (click)="logout()">Logout</button><br /><br />
+      <div>Status: <span class="status">{{status}}</span></div>
     </section>
 
     <section>
