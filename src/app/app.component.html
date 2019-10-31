@@ -57,7 +57,8 @@
     <section id="values">
       <h3>Values</h3>
       <button class="update" (click)="updateValue(generateUpdateIntValue(2))">Update an int value</button> <br /><br />
-      <div>Status: <span class="status">{{valueUpdateStatus}}</span></div>
+      <button class="create" (click)="createValue(generateCreateIntValue(5))">Create an int value</button> <br /><br />
+      <div>Status: <span class="status">{{valueStatus}}</span></div>
     </section>
 
 </div>
