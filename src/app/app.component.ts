@@ -5,6 +5,8 @@ import {
   CountQueryResponse,
   CreateIntValue,
   CreateValue,
+  DeleteValue,
+  DeleteValueResponse,
   KnoraApiConfig,
   KnoraApiConnection,
   ListNode,
@@ -15,7 +17,8 @@ import {
   UpdateResource,
   UpdateValue,
   UserCache,
-  UsersResponse, WriteValueResponse
+  UsersResponse,
+  WriteValueResponse
 } from '@knora/api';
 
 
@@ -272,6 +275,30 @@ export class AppComponent implements OnInit {
       }
     );
 
+  }
+
+  deleteValue() {
+
+    const deleteVal = new DeleteValue();
+
+    deleteVal.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw/values/bXMwnrHvQH2DMjOFrGmNzg';
+    deleteVal.type = Constants.DecimalValue;
+
+    const updateResource: UpdateResource<DeleteValue> = new UpdateResource<DeleteValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasDecimal';
+    updateResource.value = deleteVal;
+
+    this.knoraApiConnection.v2.values.deleteValue(updateResource).subscribe((res: DeleteValueResponse) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
   }
 
 }

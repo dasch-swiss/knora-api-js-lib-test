@@ -225,6 +225,28 @@ describe('workspace-project App', () => {
 
   });
 
+  it('delete a value', () => {
+
+    page.navigateTo();
+
+    const loginButton = page.getEle('div section#login button.login');
+
+    loginButton.click();
+
+    const loginStatus = page.getEle('div section#login span.status');
+
+    expect(loginStatus.getText()).toEqual('logged in');
+
+    const button = page.getEle('div section#values button.delete');
+
+    button.click();
+
+    const size = page.getEle('div section#values span.status');
+
+    expect(size.getText()).toEqual('OK');
+
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
