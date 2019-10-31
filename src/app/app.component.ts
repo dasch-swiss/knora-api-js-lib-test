@@ -3,6 +3,8 @@ import {
   ApiResponseData,
   Constants,
   CountQueryResponse,
+  CreateIntValue,
+  CreateValue,
   KnoraApiConfig,
   KnoraApiConnection,
   ListNode,
@@ -13,8 +15,9 @@ import {
   UpdateResource,
   UpdateValue,
   UserCache,
-  UsersResponse
+  UsersResponse, WriteValueResponse
 } from '@knora/api';
+
 
 @Component({
   selector: 'app-root',
@@ -38,7 +41,7 @@ export class AppComponent implements OnInit {
 
   loginStatus: string = '';
 
-  valueUpdateStatus = '';
+  valueStatus = '';
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -231,12 +234,41 @@ export class AppComponent implements OnInit {
 
   updateValue(updateResource: UpdateResource<UpdateValue>) {
 
-    this.knoraApiConnection.v2.values.updateValue(updateResource).subscribe(res => {
+    this.knoraApiConnection.v2.values.updateValue(updateResource).subscribe((res: WriteValueResponse) => {
         console.log(res);
-        this.valueUpdateStatus = 'OK';
+        this.valueStatus = 'OK';
       },
       error => {
-        this.valueUpdateStatus = '';
+        this.valueStatus = '';
+      }
+    );
+
+  }
+
+  generateCreateIntValue(int: number): UpdateResource<CreateValue> {
+    const createIntVal = new CreateIntValue();
+
+    createIntVal.type = Constants.IntValue;
+    createIntVal.int = int;
+
+    const updateResource: UpdateResource<CreateValue> = new UpdateResource<CreateValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasInteger';
+    updateResource.value = createIntVal;
+
+    return updateResource;
+  }
+
+  createValue(updateResource: UpdateResource<CreateValue>) {
+
+    this.knoraApiConnection.v2.values.createValue(updateResource).subscribe((res: WriteValueResponse) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
       }
     );
 
