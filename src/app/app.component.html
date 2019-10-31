@@ -6,7 +6,7 @@
       <h3>Login/Logout</h3>
       <button class="login" (click)="login()">Login</button><br /><br />
       <button class="logout" (click)="logout()">Logout</button><br /><br />
-      <div>Status: <span class="status">{{status}}</span></div>
+      <div>Status: <span class="status">{{loginStatus}}</span></div>
     </section>
 
     <section>
@@ -53,4 +53,11 @@
       <div>Search result size: <span class="size">{{size}}</span></div>
 
     </section>
+
+    <section id="values">
+      <h3>Values</h3>
+      <button class="update" (click)="updateValue(generateUpdateIntValue(2))">Update an int value</button> <br /><br />
+      <div>Status: <span class="status">{{valueUpdateStatus}}</span></div>
+    </section>
+
 </div>

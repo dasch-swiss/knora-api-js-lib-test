@@ -1,14 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {
   ApiResponseData,
+  Constants,
   CountQueryResponse,
   KnoraApiConfig,
   KnoraApiConnection,
+  ListNode,
   LoginResponse,
+  ReadOntology,
   ReadResource,
+  UpdateIntValue,
+  UpdateResource,
+  UpdateValue,
   UserCache,
-  UsersResponse,
-  ReadOntology, ListNode
+  UsersResponse
 } from '@knora/api';
 
 @Component({
@@ -31,7 +36,9 @@ export class AppComponent implements OnInit {
   searchResult: ReadResource[];
   size: number;
 
-  status: string = "";
+  loginStatus: string = '';
+
+  valueUpdateStatus = '';
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -45,7 +52,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.login('root', 'test').subscribe(
       (loginResponse: ApiResponseData<LoginResponse>) => {
         console.log(loginResponse);
-        this.status = "logged in";
+        this.loginStatus = 'logged in';
 
       },
       error => console.error(error)
@@ -58,7 +65,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.logout().subscribe(
       logoutRes => {
         console.log(logoutRes);
-        this.status = "logged out";
+        this.loginStatus = 'logged out';
       },
       error => console.error(error)
     );
@@ -205,5 +212,34 @@ export class AppComponent implements OnInit {
     );
   }
 
+  generateUpdateIntValue(int: number): UpdateResource<UpdateValue> {
+    const updateIntVal = new UpdateIntValue();
+
+    updateIntVal.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw/values/dJ1ES8QTQNepFKF5-EAqdg';
+    updateIntVal.type = Constants.IntValue;
+    updateIntVal.int = int;
+
+    const updateResource: UpdateResource<UpdateValue> = new UpdateResource<UpdateValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasInteger';
+    updateResource.value = updateIntVal;
+
+    return updateResource;
+  }
+
+  updateValue(updateResource: UpdateResource<UpdateValue>) {
+
+    this.knoraApiConnection.v2.values.updateValue(updateResource).subscribe(res => {
+        console.log(res);
+        this.valueUpdateStatus = 'OK';
+      },
+      error => {
+        this.valueUpdateStatus = '';
+      }
+    );
+
+  }
 
 }
