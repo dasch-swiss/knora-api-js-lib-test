@@ -249,8 +249,6 @@ export class AppComponent implements OnInit {
 
   generateCreateIntValue(int: number): UpdateResource<CreateValue> {
     const createIntVal = new CreateIntValue();
-
-    createIntVal.type = Constants.IntValue;
     createIntVal.int = int;
 
     const updateResource: UpdateResource<CreateValue> = new UpdateResource<CreateValue>();
