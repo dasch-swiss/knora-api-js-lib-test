@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
 
   login() {
 
-    this.knoraApiConnection.v2.auth.login('root', 'test').subscribe(
+    this.knoraApiConnection.v2.auth.login('username', 'root', 'test').subscribe(
       (loginResponse: ApiResponseData<LoginResponse>) => {
         console.log(loginResponse);
         this.loginStatus = 'logged in';
