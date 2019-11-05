@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   searchResult: ReadResource[];
   size: number;
 
-  loginStatus: string = '';
+  loginStatus = '';
 
   valueStatus = '';
 
@@ -222,7 +222,6 @@ export class AppComponent implements OnInit {
     const updateIntVal = new UpdateIntValue();
 
     updateIntVal.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw/values/dJ1ES8QTQNepFKF5-EAqdg';
-    updateIntVal.type = Constants.IntValue;
     updateIntVal.int = int;
 
     const updateResource: UpdateResource<UpdateValue> = new UpdateResource<UpdateValue>();
