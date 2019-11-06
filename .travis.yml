@@ -42,8 +42,8 @@ install:
 script:
   - yalc remove --all && yalc add @knora/api
   - yarn install
-  - yarn webdriver-update
-  - yarn e2e
+  #- yarn webdriver-update
+  #- yarn e2e
   - yarn build
   - docker build .
 
