@@ -181,6 +181,20 @@ describe('workspace-project App', () => {
 
   });
 
+  it('read a value', () => {
+
+    page.navigateTo();
+
+    const button = page.getEle('div section#values button.read');
+
+    button.click();
+
+    const size = page.getEle('div section#values span.status');
+
+    expect(size.getText()).toEqual('OK');
+    
+  });
+
   it('update a value', () => {
 
     page.navigateTo();

@@ -298,4 +298,18 @@ export class AppComponent implements OnInit {
     );
   }
 
+  getValue(resourceIri: string, valueUuid: string) {
+
+    this.knoraApiConnection.v2.values.getValue(resourceIri, valueUuid).subscribe(
+      (res: ReadResource) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
+
+  }
+
 }
