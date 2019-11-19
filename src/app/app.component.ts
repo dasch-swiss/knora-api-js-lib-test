@@ -18,7 +18,8 @@ import {
   UpdateValue,
   UserCache,
   UsersResponse,
-  WriteValueResponse
+  WriteValueResponse,
+  UserResponse
 } from '@knora/api';
 
 
@@ -85,6 +86,13 @@ export class AppComponent implements OnInit {
       b => console.error(b)
     );
 
+  }
+
+  getUser(email: string) {
+    this.knoraApiConnection.admin.usersEndpoint.getUser('email', email).subscribe(
+      (a: ApiResponseData<UserResponse>) => console.log(a.body.user),
+      b => console.error(b)
+    );
   }
 
   getOntology(iri: string) {

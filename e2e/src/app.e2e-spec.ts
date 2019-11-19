@@ -192,7 +192,7 @@ describe('workspace-project App', () => {
     const size = page.getEle('div section#values span.status');
 
     expect(size.getText()).toEqual('OK');
-    
+
   });
 
   it('update a value', () => {
