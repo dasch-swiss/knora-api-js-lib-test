@@ -1,15 +1,27 @@
 import {Component, OnInit} from '@angular/core';
 import {
   ApiResponseData,
+  Constants,
   CountQueryResponse,
+  CreateIntValue,
+  CreateValue,
+  DeleteValue,
+  DeleteValueResponse,
   KnoraApiConfig,
   KnoraApiConnection,
+  ListNode,
   LoginResponse,
+  ReadOntology,
   ReadResource,
+  UpdateIntValue,
+  UpdateResource,
+  UpdateValue,
   UserCache,
   UsersResponse,
-  ReadOntology, ListNode, UserResponse
+  WriteValueResponse,
+  UserResponse
 } from '@knora/api';
+
 
 @Component({
   selector: 'app-root',
@@ -31,7 +43,9 @@ export class AppComponent implements OnInit {
   searchResult: ReadResource[];
   size: number;
 
-  status: string = "";
+  loginStatus = '';
+
+  valueStatus = '';
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -45,7 +59,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.login('username', 'root', 'test').subscribe(
       (loginResponse: ApiResponseData<LoginResponse>) => {
         console.log(loginResponse);
-        this.status = "logged in";
+        this.loginStatus = 'logged in';
 
       },
       error => console.error(error)
@@ -58,7 +72,7 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.auth.logout().subscribe(
       logoutRes => {
         console.log(logoutRes);
-        this.status = "logged out";
+        this.loginStatus = 'logged out';
       },
       error => console.error(error)
     );
@@ -212,5 +226,98 @@ export class AppComponent implements OnInit {
     );
   }
 
+  generateUpdateIntValue(int: number): UpdateResource<UpdateValue> {
+    const updateIntVal = new UpdateIntValue();
+
+    updateIntVal.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw/values/dJ1ES8QTQNepFKF5-EAqdg';
+    updateIntVal.int = int;
+
+    const updateResource: UpdateResource<UpdateValue> = new UpdateResource<UpdateValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasInteger';
+    updateResource.value = updateIntVal;
+
+    return updateResource;
+  }
+
+  updateValue(updateResource: UpdateResource<UpdateValue>) {
+
+    this.knoraApiConnection.v2.values.updateValue(updateResource).subscribe((res: WriteValueResponse) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
+
+  }
+
+  generateCreateIntValue(int: number): UpdateResource<CreateValue> {
+    const createIntVal = new CreateIntValue();
+    createIntVal.int = int;
+
+    const updateResource: UpdateResource<CreateValue> = new UpdateResource<CreateValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasInteger';
+    updateResource.value = createIntVal;
+
+    return updateResource;
+  }
+
+  createValue(updateResource: UpdateResource<CreateValue>) {
+
+    this.knoraApiConnection.v2.values.createValue(updateResource).subscribe((res: WriteValueResponse) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
+
+  }
+
+  deleteValue() {
+
+    const deleteVal = new DeleteValue();
+
+    deleteVal.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw/values/bXMwnrHvQH2DMjOFrGmNzg';
+    deleteVal.type = Constants.DecimalValue;
+
+    const updateResource: UpdateResource<DeleteValue> = new UpdateResource<DeleteValue>();
+
+    updateResource.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+    updateResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+    updateResource.property = 'http://0.0.0.0:3333/ontology/0001/anything/v2#hasDecimal';
+    updateResource.value = deleteVal;
+
+    this.knoraApiConnection.v2.values.deleteValue(updateResource).subscribe((res: DeleteValueResponse) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
+  }
+
+  getValue(resourceIri: string, valueUuid: string) {
+
+    this.knoraApiConnection.v2.values.getValue(resourceIri, valueUuid).subscribe(
+      (res: ReadResource) => {
+        console.log(res);
+        this.valueStatus = 'OK';
+      },
+      error => {
+        this.valueStatus = '';
+      }
+    );
+
+  }
 
 }

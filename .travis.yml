@@ -36,7 +36,7 @@ install:
   - make stack-restart-api
   - cd $TRAVIS_BUILD_DIR
   - yarn global add yalc
-  - git clone https://github.com/dhlab-basel/knora-api-js-lib && cd knora-api-js-lib && npm install && npm run yalc-publish
+  - git clone https://github.com/dasch-swiss/knora-api-js-lib && cd knora-api-js-lib && npm install && npm run yalc-publish
   - cd $TRAVIS_BUILD_DIR
 
 script:

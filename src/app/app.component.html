@@ -6,7 +6,7 @@
       <h3>Login/Logout</h3>
       <button class="login" (click)="login()">Login</button><br /><br />
       <button class="logout" (click)="logout()">Logout</button><br /><br />
-      <div>Status: <span class="status">{{status}}</span></div>
+      <div>Status: <span class="status">{{loginStatus}}</span></div>
     </section>
 
     <section>
@@ -54,4 +54,14 @@
       <div>Search result size: <span class="size">{{size}}</span></div>
 
     </section>
+
+    <section id="values">
+      <h3>Values</h3>
+      <button class="read" (click)="getValue('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw', 'dJ1ES8QTQNepFKF5-EAqdg')">Read a value</button> <br /><br />
+      <button class="update" (click)="updateValue(generateUpdateIntValue(2))">Update an int value</button> <br /><br />
+      <button class="create" (click)="createValue(generateCreateIntValue(5))">Create an int value</button> <br /><br />
+      <button class="delete" (click)="deleteValue()">Delete a value</button>
+      <div>Status: <span class="status">{{valueStatus}}</span></div>
+    </section>
+
 </div>
