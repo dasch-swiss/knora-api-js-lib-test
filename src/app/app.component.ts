@@ -3,7 +3,9 @@ import {
   ApiResponseData,
   Constants,
   CountQueryResponse,
+  CreateBooleanValue,
   CreateIntValue,
+  CreateResource,
   CreateValue,
   DeleteValue,
   DeleteValueResponse,
@@ -17,9 +19,9 @@ import {
   UpdateResource,
   UpdateValue,
   UserCache,
+  UserResponse,
   UsersResponse,
-  WriteValueResponse,
-  UserResponse
+  WriteValueResponse
 } from '@knora/api';
 
 
@@ -124,6 +126,35 @@ export class AppComponent implements OnInit {
       },
       (error) => {
 
+      }
+    );
+
+  }
+
+  createResource() {
+
+    const createResource = new CreateResource();
+
+    createResource.label = 'testding';
+
+    createResource.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+
+    createResource.attachedToProject = 'http://rdfh.ch/projects/0001';
+
+    const boolVal = new CreateBooleanValue();
+    boolVal.bool = true;
+
+    const props = {
+      'http://0.0.0.0:3333/ontology/0001/anything/v2#hasBoolean': [
+        boolVal
+      ]
+    };
+
+    createResource.properties = props;
+
+    this.knoraApiConnection.v2.res.createResource(createResource).subscribe(
+      (res: ReadResource) => {
+        this.resource = res;
       }
     );
 

@@ -87,7 +87,7 @@ describe('workspace-project App', () => {
 
     page.navigateTo();
 
-    const button = page.getEle('div section#resource button');
+    const button = page.getEle('div section#resource button.read');
 
     button.click();
 
@@ -258,6 +258,28 @@ describe('workspace-project App', () => {
     const size = page.getEle('div section#values span.status');
 
     expect(size.getText()).toEqual('OK');
+
+  });
+
+  it('create a resource', () => {
+
+    page.navigateTo();
+
+    const loginButton = page.getEle('div section#login button.login');
+
+    loginButton.click();
+
+    const loginStatus = page.getEle('div section#login span.status');
+
+    expect(loginStatus.getText()).toEqual('logged in');
+
+    const button = page.getEle('div section#resource button.create');
+
+    button.click();
+
+    const label = page.getEle('div section#resource span.label');
+
+    expect(label.getText()).toEqual('testding');
 
   });
 

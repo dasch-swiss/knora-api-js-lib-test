@@ -30,7 +30,8 @@
 
     <section id="resource">
       <h3>Resource</h3>
-      <button (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
+      <button class="read" (click)="getResource('http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw')">Get anything testding</button> <br /><br />
+      <button class="create" (click)="createResource()">Create anything testding</button> <br /><br />
       <div>The resource's label: <span class="label">{{resource?.label}}</span> </div> <br/>
     </section>
 
