@@ -317,13 +317,21 @@ describe('workspace-project App', () => {
 
     expect(loginStatus.getText()).toEqual('logged in');
 
-    const button = page.getEle('div section#resource button.delete');
+    const button = page.getEle('div section#resource button.create');
 
     button.click();
 
-    const label = page.getEle('div section#resource span.status');
+    const label = page.getEle('div section#resource span.label');
 
-    expect(label.getText()).toEqual('OK');
+    expect(label.getText()).toEqual('testding');
+
+    const button2 = page.getEle('div section#resource button.delete');
+
+    button2.click();
+
+    const label2 = page.getEle('div section#resource span.status');
+
+    expect(label2.getText()).toEqual('OK');
 
   });
 
