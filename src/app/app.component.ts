@@ -25,6 +25,7 @@ import {
 } from '@knora/api';
 import {UpdateResourceMetadata} from '../../.yalc/@knora/api/src/models/v2/resources/update/update-resource-metadata';
 import {UpdateResourceMetadataResponse} from '../../.yalc/@knora/api/src/models/v2/resources/update/update-resource-metadata-response';
+import {DeleteResource} from '../../.yalc/@knora/api/src/models/v2/resources/delete/delete-resource';
 
 
 @Component({
@@ -177,8 +178,24 @@ export class AppComponent implements OnInit {
     this.knoraApiConnection.v2.res.updateResourceMetadata(updateResourceMetadata).subscribe(
       (res: UpdateResourceMetadataResponse) => {
         this.resourceStatus = 'OK';
-    }
+      }
     );
+  }
+
+  deleteResource() {
+
+    const deleteResource = new DeleteResource();
+
+    deleteResource.id = this.resource.id;
+
+    deleteResource.type = this.resource.type;
+
+    this.knoraApiConnection.v2.res.deleteResource(deleteResource).subscribe(
+      (res: DeleteValueResponse) => {
+        this.resourceStatus = 'OK';
+      }
+    );
+
   }
 
   getListNode(listNodeIri: string) {

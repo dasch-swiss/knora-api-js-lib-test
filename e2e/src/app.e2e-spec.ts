@@ -143,7 +143,7 @@ describe('workspace-project App', () => {
 
     const size = page.getEle('div section#search span.size');
 
-    expect(size.getText()).toEqual('16');
+    expect(size.getText()).toEqual('19');
 
   });
 
@@ -157,7 +157,7 @@ describe('workspace-project App', () => {
 
     const size = page.getEle('div section#search span.size');
 
-    expect(size.getText()).toEqual('16');
+    expect(size.getText()).toEqual('19');
 
   });
 
@@ -171,7 +171,7 @@ describe('workspace-project App', () => {
 
     const size = page.getEle('div section#search span.size');
 
-    expect(size.getText()).toEqual('16');
+    expect(size.getText()).toEqual('19');
 
   });
 
@@ -199,7 +199,7 @@ describe('workspace-project App', () => {
 
     const size = page.getEle('div section#search span.size');
 
-    expect(size.getText()).toEqual('43');
+    expect(size.getText()).toEqual('46');
 
   });
 
@@ -302,6 +302,28 @@ describe('workspace-project App', () => {
     const label = page.getEle('div section#resource span.label');
 
     expect(label.getText()).toEqual('testding');
+
+  });
+
+  it('delete a resource', () => {
+
+    page.navigateTo();
+
+    const loginButton = page.getEle('div section#login button.login');
+
+    loginButton.click();
+
+    const loginStatus = page.getEle('div section#login span.status');
+
+    expect(loginStatus.getText()).toEqual('logged in');
+
+    const button = page.getEle('div section#resource button.delete');
+
+    button.click();
+
+    const label = page.getEle('div section#resource span.status');
+
+    expect(label.getText()).toEqual('OK');
 
   });
 
