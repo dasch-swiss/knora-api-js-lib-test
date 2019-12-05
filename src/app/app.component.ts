@@ -23,6 +23,8 @@ import {
   UsersResponse,
   WriteValueResponse
 } from '@knora/api';
+import {UpdateResourceMetadata} from '../../.yalc/@knora/api/src/models/v2/resources/update/update-resource-metadata';
+import {UpdateResourceMetadataResponse} from '../../.yalc/@knora/api/src/models/v2/resources/update/update-resource-metadata-response';
 
 
 @Component({
@@ -48,6 +50,8 @@ export class AppComponent implements OnInit {
   loginStatus = '';
 
   valueStatus = '';
+
+  resourceStatus = '';
 
   ngOnInit() {
     const config = new KnoraApiConfig('http', '0.0.0.0', 3333, undefined, undefined, true);
@@ -158,6 +162,23 @@ export class AppComponent implements OnInit {
       }
     );
 
+  }
+
+  updateResourceMetadata() {
+
+    const updateResourceMetadata = new UpdateResourceMetadata();
+
+    updateResourceMetadata.id = 'http://rdfh.ch/0001/H6gBWUuJSuuO-CilHV8kQw';
+
+    updateResourceMetadata.type = 'http://0.0.0.0:3333/ontology/0001/anything/v2#Thing';
+
+    updateResourceMetadata.label = 'Das Ding der Dinge';
+
+    this.knoraApiConnection.v2.res.updateResourceMetadata(updateResourceMetadata).subscribe(
+      (res: UpdateResourceMetadataResponse) => {
+        this.resourceStatus = 'OK';
+    }
+    );
   }
 
   getListNode(listNodeIri: string) {
